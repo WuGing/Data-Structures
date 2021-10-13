@@ -8,5 +8,5 @@ This AVL Tree accepts Integer values.
 Adds a node (as a leaf) to the tree, then checks for and performs any needed rebalancing.  
 
 ## WIP
-Search
-Delete
+### Search
+### Delete
