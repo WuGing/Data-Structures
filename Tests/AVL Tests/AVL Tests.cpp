@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 
-#include "../Data Structures/AVL/AVL.cpp"
-#include "../Data Structures/AVL/Node.cpp"
+#include "../../Projects/AVL/AVL.cpp"
+#include "../../Projects/AVL/Node.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

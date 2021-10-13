@@ -169,7 +169,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data Structures\AVL\AVL.vcxproj">
+    <ProjectReference Include="..\..\Projects\AVL\AVL.vcxproj">
       <Project>{4d48da14-abef-4827-b82a-516b91157442}</Project>
     </ProjectReference>
   </ItemGroup>
