@@ -1,0 +1,59 @@
+#include <iostream>
+
+using namespace std;
+
+#ifndef THIS
+#define THIS // ?
+
+void print(int n)
+{
+	cout << n << " ";
+}
+
+template<class Process>
+void printit(Process f)
+{
+	for (int i = 0; i < 10; i++)
+		f(i);
+}
+
+#else 
+
+void print(int n)
+{
+	cout << n << " ";
+}
+
+void printit(void(*f)(int))
+{
+	for (int i = 0; i < 10; i++)
+		f(i);
+}
+
+
+#endif	// THIS
+
+int main52()
+{
+//	char c;
+	printit(print);
+
+	getc(stdin);
+
+	return EXIT_SUCCESS;
+}
+
+
+// for the test, know the functions on pg 552, 
+	// insert
+	// erase
+	// count
+//	or
+	// count
+	// find
+	// search
+
+// have a general understanding of what is going on with the B-tree.
+
+// substantial extra credit if we figure out how to delete node 19 and still have a working B-tree.
+
