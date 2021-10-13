@@ -82,6 +82,77 @@ namespace AVLTests
 				tree.PostOrder());
 		}
 
+		TEST_METHOD(BalanceRotateLeftTest)
+		{
+			AVL tree;
+
+			tree.Insert(1);
+			tree.Insert(3);
+			tree.Insert(5);
+
+			Assert::AreEqual(std::string("3 1 5"),
+				tree.PreOrder());
+
+			Assert::AreEqual(std::string("1 3 5"),
+				tree.InOrder());
+
+			Assert::AreEqual(std::string("1 5 3"),
+				tree.PostOrder());
+		}
+
+		TEST_METHOD(BalanceRotateRightTest)
+		{
+			AVL tree;
+
+			tree.Insert(5);
+			tree.Insert(3);
+			tree.Insert(1);
+
+			Assert::AreEqual(std::string("3 1 5"),
+				tree.PreOrder());
+
+			Assert::AreEqual(std::string("1 3 5"),
+				tree.InOrder());
+
+			Assert::AreEqual(std::string("1 5 3"),
+				tree.PostOrder());
+		}
+
+		TEST_METHOD(BalanceRotateLeftRightTest)
+		{
+			AVL tree;
+
+			tree.Insert(3);
+			tree.Insert(5);
+			tree.Insert(4);
+
+			Assert::AreEqual(std::string("4 3 5"),
+				tree.PreOrder());
+
+			Assert::AreEqual(std::string("3 4 5"),
+				tree.InOrder());
+
+			Assert::AreEqual(std::string("3 5 4"),
+				tree.PostOrder());
+		}
+
+		TEST_METHOD(BalanceRotateRightLeftTest)
+		{
+			AVL tree;
+
+			tree.Insert(5);
+			tree.Insert(3);
+			tree.Insert(4);
+
+			Assert::AreEqual(std::string("4 3 5"),
+				tree.PreOrder());
+
+			Assert::AreEqual(std::string("3 4 5"),
+				tree.InOrder());
+
+			Assert::AreEqual(std::string("3 5 4"),
+				tree.PostOrder());
+		}
 
 	};
 }

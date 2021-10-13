@@ -195,16 +195,22 @@ bool AVL::IsLeaf(Node* n)
 	return false;
 }
 
+/// <summary>
+/// Prints the tree InOrder
+/// Left, Root, Right
+/// </summary>
+/// <returns></returns>
 string AVL::InOrder()
 {
 	return InOrder(root);
 }
 
 /// <summary>
-/// Prints the tree InOrder
+/// Prints a subtree InOrder
 /// Left, Root, Right
 /// </summary>
 /// <param name="n"></param>
+/// <returns></returns>
 string AVL::InOrder(Node* n)
 {
 	if (n == nullptr)
@@ -232,16 +238,22 @@ string AVL::InOrder(Node* n)
 	return inOrder;
 }
 
+/// <summary>
+/// Prints the tree in PreOrder
+/// Root, Left, Right
+/// </summary>
+/// <returns></returns>
 string AVL::PreOrder()
 {
 	return PreOrder(root);
 }
 
 /// <summary>
-/// Prints the tree PreOrder
+/// Prints a subtree in PreOrder
 /// Root, Left, Right
 /// </summary>
 /// <param name="n"></param>
+/// <returns></returns>
 string AVL::PreOrder(Node* n)
 {
 	if (n == nullptr)
@@ -269,16 +281,22 @@ string AVL::PreOrder(Node* n)
 	return preOrder;
 }
 
+/// <summary>
+/// Prints the tree in PostOrder
+/// Left, Right, Root
+/// </summary>
+/// <returns></returns>
 string AVL::PostOrder()
 {
 	return PostOrder(root);
 }
 
 /// <summary>
-/// Prints the tree PostOrder
+/// Prints a subtree tree in PostOrder
 /// Left, Right, Root
 /// </summary>
 /// <param name="n"></param>
+/// <returns></returns>
 string AVL::PostOrder(Node* n)
 {
 	if (n == nullptr)
@@ -399,7 +417,7 @@ Node* AVL::Rebalance(Node*& node, int val)
 	// Corrects an imbalance at a given node
 	// due to an addition in the left subtree
 	// of the node's right child
-	if (balance > TREE_RIGHT && val > node->right->val)
+	if (balance > TREE_RIGHT && val < node->right->val)
 	{
 		node->right = RotateRight(node->right);
 		return RotateLeft(node);
@@ -409,7 +427,7 @@ Node* AVL::Rebalance(Node*& node, int val)
 	// Corrects an imbalance at a given node 
 	// due to an addition in the right subtree
 	// of node's left child
-	if (balance < TREE_LEFT && val < node->left->val)
+	if (balance < TREE_LEFT && val > node->left->val)
 	{
 		node->left = RotateLeft(node->left);
 		return RotateRight(node);
