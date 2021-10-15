@@ -7,6 +7,9 @@ This AVL Tree accepts Integer values.
 ### Insert
 Adds a node (as a leaf) to the tree, then checks for and performs any needed rebalancing.  
 
-## WIP
 ### Search
+Checks if the tree contains a value, and returns the node containing that value.
+If the tree doesn't contain the value, it'll return a nullptr.
+
+## WIP
 ### Delete

@@ -457,11 +457,22 @@ int AVL::GetHeight(Node* node) {
 	return node->height;
 }
 
+/// <summary>
+/// Searches the tree for a value.
+/// </summary>
+/// <param name="v">Value to search tree for</param>
+/// <returns></returns>
 Node* AVL::Search(int v)
 {
 	return Search(v, root);
 }
 
+/// <summary>
+/// Searches a subtree, checking for a value.
+/// </summary>
+/// <param name="v">Value to search a subtree for</param>
+/// <param name="node">Subtree to search in</param>
+/// <returns>Node containing the value</returns>
 Node* AVL::Search(int v, Node*& node)
 {
 	// if the current location is empty, the node doesn't exist
