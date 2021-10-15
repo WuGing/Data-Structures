@@ -60,72 +60,46 @@ void AVL::Delete(Node*& node)
 	node = nullptr;
 }
 
-/*
-void AVL::Erase(int v, Node *& n)
-{
-
-	if (n == nullptr)
-		return;
-	if (v < n->val)
-		Erase(v, n->left);
-	else if (v > n->val)
-		Erase(v, n->right);
-	else EraseNode(n);
-}
-
-void AVL::EraseNode(Node *& n)
-{
-	Node *temp;
-
-	temp = n;
-
-	if (n->left == nullptr)
-	{
-		n = n->right;
-		delete temp;
-		treeSize--;
-	}
-
-	else if (n->right == nullptr)
-	{
-		n = n->left;
-		delete temp;
-		treeSize--;
-	}
-
-	else
-	{
-		temp = n->left;
-		while (temp->right != nullptr)
-			temp = temp->right;
-		n->val = temp->val;
-		Erase(n->val, n->left);
-	}
-}*/
+// Probably need to find a better home for these
 
 /// <summary>
-/// Returns the high difference of a 
-/// nodes children
+/// Prints the AVL tree.
 /// </summary>
-/// <param name="node"></param>
-/// <returns></returns>
-int AVL::GetBalance(Node*& node)
+/// <param name="size"></param>
+void AVL::Print()
 {
-	// if node is null, well... 
-	if (node == nullptr)
-	{
-		return 0;
-	}
-
-	// get the difference between the heights
-	return GetHeight(node->right) - GetHeight(node->left);
+	Print(root, treeSize);
 }
 
-/// TODO: this needs figuring out if I want to 
-/// encapsulate everything in the class itself
+void AVL::Print(Node* n, int size)
+{
+	cout << setw(4 * size) << "";
+
+	if (n == nullptr)
+		cout << "[Empty]" << endl;
+	else if (IsLeaf(n))
+		cout << n->val << " [leaf]" << endl;
+	else
+	{
+		cout << n->val << endl;
+		Print(n->left, size + 1);
+		Print(n->right, size + 1);
+	}
+}
+
+int AVL::Size()
+{
+	return treeSize;
+}
+
+#pragma region AVL Tree Functions
 /// <summary>
 /// Inserts a value to the tree.
 /// </summary>
+/// <remarks>
+/// Average O(log n)
+/// Worst case O(log n)
+/// </remarks>
 /// <param name="v">Value to add to tree</param>
 void AVL::Insert(int v)
 {
@@ -173,6 +147,122 @@ Node* AVL::Insert(int v, Node*& node)
 	// if the value is already present, return a warning
 	cout << "Cannot have duplicate values in this tree" << endl;
 	return node;
+}
+
+
+/*
+/// <remarks>
+/// Average O(log n)
+/// Worst case O(log n)
+/// </remarks>
+void AVL::Erase(int v, Node *& n)
+{
+
+	if (n == nullptr)
+		return;
+	if (v < n->val)
+		Erase(v, n->left);
+	else if (v > n->val)
+		Erase(v, n->right);
+	else EraseNode(n);
+}
+
+void AVL::EraseNode(Node *& n)
+{
+	Node *temp;
+
+	temp = n;
+
+	if (n->left == nullptr)
+	{
+		n = n->right;
+		delete temp;
+		treeSize--;
+	}
+
+	else if (n->right == nullptr)
+	{
+		n = n->left;
+		delete temp;
+		treeSize--;
+	}
+
+	else
+	{
+		temp = n->left;
+		while (temp->right != nullptr)
+			temp = temp->right;
+		n->val = temp->val;
+		Erase(n->val, n->left);
+	}
+}*/
+
+/// <summary>
+/// Searches the tree for a value.
+/// </summary>
+/// <remarks>
+/// Average O(log n)
+/// Worst case O(log n)
+/// </remarks>
+/// <param name="v">Value to search tree for</param>
+/// <returns></returns>
+Node* AVL::Search(int v)
+{
+	return Search(v, root);
+}
+
+/// <summary>
+/// Searches a subtree, checking for a value.
+/// </summary>
+/// <remarks>
+/// Average O(log n)
+/// Worst case O(log n)
+/// </remarks>
+/// <param name="v">Value to search a subtree for</param>
+/// <param name="node">Subtree to search in</param>
+/// <returns>Node containing the value</returns>
+Node* AVL::Search(int v, Node*& node)
+{
+	// if the current location is empty, the node doesn't exist
+	if (node == nullptr)
+	{
+		cout << "Value does not exist in the tree" << endl;
+		return nullptr;			// return a new node object
+	}
+
+	// if the value is less than the current node
+	if (v < node->val)
+	{
+		return Search(v, node->left);
+	}
+	// if the value is more than the current node
+	else if (v > node->val)
+	{
+		return Search(v, node->right);
+	}
+
+	// node value should equal the value we're searching for
+	return node;
+}
+#pragma endregion
+
+#pragma region Helper Functions
+/// <summary>
+/// Returns the high difference of a 
+/// nodes children
+/// </summary>
+/// <param name="node"></param>
+/// <returns></returns>
+int AVL::GetBalance(Node*& node)
+{
+	// if node is null, well... 
+	if (node == nullptr)
+	{
+		return 0;
+	}
+
+	// get the difference between the heights
+	return GetHeight(node->right) - GetHeight(node->left);
 }
 
 /// <summary>
@@ -324,36 +414,6 @@ string AVL::PostOrder(Node* n)
 	return postOrder;
 }
 
-int AVL::Size()
-{
-	return treeSize;
-}
-
-/// <summary>
-/// Prints the AVL tree.
-/// </summary>
-/// <param name="size"></param>
-void AVL::Print()
-{
-	Print(root, treeSize);
-}
-
-void AVL::Print(Node* n, int size)
-{
-	cout << setw(4 * size) << "";
-
-	if (n == nullptr)
-		cout << "[Empty]" << endl;
-	else if (IsLeaf(n))
-		cout << n->val << " [leaf]" << endl;
-	else
-	{
-		cout << n->val << endl;
-		Print(n->left, size + 1);
-		Print(n->right, size + 1);
-	}
-}
-
 /// <summary>
 /// Corrects an imbalance at a given node 
 /// due to an addition in the right subtree 
@@ -456,43 +516,4 @@ int AVL::GetHeight(Node* node) {
 
 	return node->height;
 }
-
-/// <summary>
-/// Searches the tree for a value.
-/// </summary>
-/// <param name="v">Value to search tree for</param>
-/// <returns></returns>
-Node* AVL::Search(int v)
-{
-	return Search(v, root);
-}
-
-/// <summary>
-/// Searches a subtree, checking for a value.
-/// </summary>
-/// <param name="v">Value to search a subtree for</param>
-/// <param name="node">Subtree to search in</param>
-/// <returns>Node containing the value</returns>
-Node* AVL::Search(int v, Node*& node)
-{
-	// if the current location is empty, the node doesn't exist
-	if (node == nullptr)
-	{
-		cout << "Value does not exist in the tree" << endl;
-		return nullptr;			// return a new node object
-	}
-
-	// if the value is less than the current node
-	if (v < node->val)
-	{
-		return Search(v, node->left);
-	}
-	// if the value is more than the current node
-	else if (v > node->val)
-	{
-		return Search(v, node->right);
-	}
-
-	// node value should equal the value we're searching for
-	return node;
-}
+#pragma endregion
