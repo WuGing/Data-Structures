@@ -30,6 +30,16 @@ namespace AVLTests
 
 			Assert::AreEqual(std::string("1 3 2 5 4"),
 				tree.PostOrder());
+
+			Node* test04 = tree.Search(4);
+			Node* test05 = tree.Search(5);
+			Node* test01 = tree.Search(1);
+			Node* test02 = tree.Search(2);
+
+			Assert::AreEqual(3, test04->height);
+			Assert::AreEqual(1, test05->height);
+			Assert::AreEqual(1, test01->height);
+			Assert::AreEqual(2, test02->height);
 		}
 
 		TEST_METHOD(OrderPrintTests2)
@@ -60,6 +70,16 @@ namespace AVLTests
 
 			Assert::AreEqual(std::string("4 12 10 18 24 22 15 31 44 35 66 90 70 50 25"),
 				tree.PostOrder());
+
+			Node* test25 = tree.Search(25);
+			Node* test15 = tree.Search(15);
+			Node* test35 = tree.Search(35);
+			Node* test31 = tree.Search(31);
+
+			Assert::AreEqual(4, test25->height);
+			Assert::AreEqual(3, test15->height);
+			Assert::AreEqual(2, test35->height);
+			Assert::AreEqual(1, test31->height);
 		}
 
 		TEST_METHOD(UnOrderedPrintTests1) 
@@ -68,9 +88,9 @@ namespace AVLTests
 
 			tree.Insert(1);
 			tree.Insert(2);
-			tree.Insert(3);
+			tree.Insert(3);		// rotate left
 			tree.Insert(4);
-			tree.Insert(5);
+			tree.Insert(5);		// rotate left
 
 			Assert::AreEqual(std::string("2 1 4 3 5"),
 				tree.PreOrder());
@@ -80,6 +100,16 @@ namespace AVLTests
 
 			Assert::AreEqual(std::string("1 3 5 4 2"),
 				tree.PostOrder());
+
+			Node* test04 = tree.Search(4);
+			Node* test05 = tree.Search(5);
+			Node* test01 = tree.Search(1);
+			Node* test02 = tree.Search(2);
+
+			Assert::AreEqual(2, test04->height);
+			Assert::AreEqual(1, test05->height);
+			Assert::AreEqual(1, test01->height);
+			Assert::AreEqual(3, test02->height);
 		}
 
 		TEST_METHOD(BalanceRotateLeftTest)
@@ -154,5 +184,52 @@ namespace AVLTests
 				tree.PostOrder());
 		}
 
+		TEST_METHOD(SearchTest)
+		{
+			AVL tree;
+
+			tree.Insert(50);
+			tree.Insert(75);
+			tree.Insert(25);
+			tree.Insert(100);
+			tree.Insert(0);
+			tree.Insert(35);
+			tree.Insert(95);
+			tree.Insert(5);
+			tree.Insert(4);
+			tree.Insert(62);
+
+			// let's make sure the tree is in the right order
+			Assert::AreEqual(std::string("50 25 4 0 5 35 95 75 62 100"),
+				tree.PreOrder());
+
+			Assert::AreEqual(std::string("0 4 5 25 35 50 62 75 95 100"),
+				tree.InOrder());
+
+			Assert::AreEqual(std::string("0 5 4 35 25 62 75 100 95 50"),
+				tree.PostOrder());
+
+			// ensure we don't return for nodes that don't exist
+			Assert::IsNull(tree.Search(7));
+			Assert::IsNull(tree.Search(64));
+
+			// retrieve nodes
+			Node* test75 = tree.Search(75);
+			Node* test95 = tree.Search(95);
+			Node* test50 = tree.Search(50);
+			Node* test62 = tree.Search(62);
+			Node* test35 = tree.Search(35);
+			Node* test04 = tree.Search(4);
+			Node* test25 = tree.Search(25);
+
+			// check that returned nodes have the correct height
+			Assert::AreEqual(2, test75->height);
+			Assert::AreEqual(3, test95->height);
+			Assert::AreEqual(4, test50->height);
+			Assert::AreEqual(1, test62->height);
+			Assert::AreEqual(1, test35->height);
+			Assert::AreEqual(2, test04->height);
+			Assert::AreEqual(3, test25->height);
+		}
 	};
 }

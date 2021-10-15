@@ -367,8 +367,8 @@ Node* AVL::RotateLeft(Node*& node)
 	nodeRight->left = node;				// set nodeRight's left child to node
 
 	// calculate the new height
-	nodeRight->height = 1 + max(GetHeight(node->left), GetHeight(node->right));
 	node->height = 1 + max(GetHeight(node->left), GetHeight(node->right));
+	nodeRight->height = 1 + max(GetHeight(nodeRight->left), GetHeight(nodeRight->right));
 
 	return nodeRight;					// nodeRight is now node (ie, is now top)
 }
@@ -386,8 +386,8 @@ Node* AVL::RotateRight(Node*& node)
 	nodeLeft->right = node;				// Set nodeLeft's right child to node
 
 	// calculate the new height
-	nodeLeft->height = 1 + max(GetHeight(node->left), GetHeight(node->right));
 	node->height = 1 + max(GetHeight(node->left), GetHeight(node->right));
+	nodeLeft->height = 1 + max(GetHeight(nodeLeft->left), GetHeight(nodeLeft->right));
 
 	return nodeLeft;					// nodeLeft is now node (ie, is now top)
 }
@@ -474,12 +474,12 @@ Node* AVL::Search(int v, Node*& node)
 	// if the value is less than the current node
 	if (v < node->val)
 	{
-		Search(v, node->left);
+		return Search(v, node->left);
 	}
 	// if the value is more than the current node
 	else if (v > node->val)
 	{
-		Search(v, node->right);
+		return Search(v, node->right);
 	}
 
 	// node value should equal the value we're searching for
