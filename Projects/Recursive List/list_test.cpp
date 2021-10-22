@@ -15,15 +15,15 @@ using namespace std;
 using namespace list_2;
 
 // PROTOTYPES for functions used by this test program:
-void print_menu( );
+void DisplayMenu( );
 // Postcondition: A menu of choices for this program has been written to cout.
 
-char get_user_command( );
+char GetUserCommand( );
 // Postcondition: The user has been prompted to enter a one character command.
 // The next character has been read (skipping blanks and newline characters), 
 // and this character has been returned.
 
-int get_number( );
+int GetNumber( );
 // Postcondition: The user has been prompted to enter a real number. The
 // number has been read, echoed to the screen, and returned by the function.
 
@@ -38,21 +38,21 @@ int main( )
 
     do
     {
-        print_menu( );
-        choice = toupper(get_user_command( ));
+        DisplayMenu( );
+        choice = toupper(GetUserCommand( ));
         switch (choice)
         {
 			
             case 'S': cout << "Size is " << test.size( ) << '.' << endl;
                       break;
-            case 'I': test.insert(get_number( ));
+            case 'I': test.insert(GetNumber( ));
                       break;
-			case 'F': if (test.find(get_number()))
+			case 'F': if (test.find(GetNumber()))
 						  cout << "The number is in the list" << endl;
 					  else
 						  cout << "The number is not in the list" << endl;
 					  break;					
-            case 'A': test.addEnd(get_number( ));
+            case 'A': test.addEnd(GetNumber( ));
                       break;
 			case 'P': test.print();
 					  break;
@@ -66,7 +66,7 @@ int main( )
     return EXIT_SUCCESS;
 }
 
-void print_menu( )
+void DisplayMenu( )
 // Library facilities used: iostream.h
 {
     cout << endl; // Print blank line before the menu
@@ -79,7 +79,7 @@ void print_menu( )
     cout << " Q   Quit this test program" << endl;
 }
 
-char get_user_command( )
+char GetUserCommand( )
 // Library facilities used: iostream
 {
     char command;
@@ -90,7 +90,7 @@ char get_user_command( )
     return command;
 }
 
-int get_number( )
+int GetNumber( )
 // Library facilities used: iostream
 {
    int result;

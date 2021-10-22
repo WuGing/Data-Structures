@@ -22,7 +22,7 @@ int main()
 	// interactive portion
 	do 
 	{
-		PrintMenu();
+		DisplayMenu();
 		choice = toupper(GetUserCommand());
 		switch (choice)
 		{
@@ -98,7 +98,7 @@ void AllocateArray(int*& intArray, int size)
 	}
 }
 
-void PrintMenu()
+void DisplayMenu()
 {
 	cout << endl;
 	cout << " H   Performs a default HeapSort" << endl;

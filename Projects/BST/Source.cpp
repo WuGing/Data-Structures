@@ -1,14 +1,6 @@
-/*
-* I Joshua Sutherland, Section 001, have not used any code other than my
-* own (or that in the textbook) for this project.I also have not used any
-* function or data-structure from the Standard - Template Library. I
-* understand that any violation of this disclaimer will result in a 0 for
-* the project.
-*/
-
 #include <iostream>
-#include "BST.h"
 #include "Source.h"
+#include "BST.h"
 
 using namespace std;
 
@@ -21,49 +13,71 @@ int main()
 
 	do
 	{
-		print_menu();
-		choice = toupper(get_user_command());
+		DisplayMenu();
+		choice = toupper(GetUserCommand());
 		switch (choice)
 		{
 		case PRINT: 
 			do
 			{
-				print_choice_menu();
-				choice = toupper(get_user_command());
+				DisplayPrintChoiceMenu();
+				choice = toupper(GetUserCommand());
+
 				switch (choice)
 				{
-				case PRINT: tree.print(tree.root, tree.size());
+				case PRINT: 
+					tree.Print();
 					break;
-				case PREORDER: tree.preorder(tree.root);
+
+				case PREORDER: 
+					cout << tree.PreOrder();
 					break;
-				case INORDER: tree.inorder(tree.root);
+
+				case INORDER: 
+					cout << tree.InOrder();
 					break;
-				case POSTORDER: tree.postorder(tree.root);
+
+				case POSTORDER: 
+					cout << tree.PostOrder();
 					break;
+
 				case QUIT_PRINT:
 					break;
-				default: cout << choice << " is invalid." << endl;
+
+				default: 
+					cout << choice << " is invalid." << endl;
 				}
 			} while (choice != QUIT_PRINT);
 			break;
-		case SIZE: cout << "Size is " << tree.size() << '.' << endl;
+
+		case SIZE: 
+			cout << "Size is " << tree.Size() << '.' << endl;
 			break;
-		case INSERT: tree.insert(get_number(), tree.root);
+
+		case INSERT: 
+			tree.Insert(GetNumber());
 			break;
-		case ERASE: tree.erase(get_number(), tree.root);
+
+		case ERASE: 
+			tree.Delete(GetNumber());
 			cout << "Number has been removed." << endl;
 			break;
+
 		case QUIT: cout << "Ridicule is the best test of truth." << endl;
 			break;
-		default:  cout << choice << " is invalid." << endl;
+
+		default:  
+			cout << choice << " is invalid." << endl;
 		}
 	} while ((choice != QUIT));
 
 	return EXIT_SUCCESS;
 }
 
-void print_menu()
-// Library facilities used: iostream.h
+/// <summary>
+/// 
+/// </summary>
+void DisplayMenu()
 {
 	cout << endl; // Print blank line before the menu
 	cout << "The following choices are available: " << endl;
@@ -74,19 +88,25 @@ void print_menu()
 	cout << " Q   Quit this test program" << endl;
 }
 
-void print_choice_menu()
+/// <summary>
+/// 
+/// </summary>
+void DisplayPrintChoiceMenu()
 {
 	cout << endl;
 	cout << "The following choices are available: " << endl;
 	cout << " P  The print() function will be called printing the tree" << endl;
-	cout << " R  Print the tree using the preorder traversal" << endl;
+	cout << " R  Print the tree using a preorder traversal" << endl;
 	cout << " N  Print the tree using an inorder traversal" << endl;
 	cout << " O  Print the tree using a postorder traversal" << endl;
 	cout << " X  Exit the print menu" << endl;
 }
 
-char get_user_command()
-// Library facilities used: iostream
+/// <summary>
+/// 
+/// </summary>
+/// <returns></returns>
+char GetUserCommand()
 {
 	char command;
 
@@ -96,8 +116,11 @@ char get_user_command()
 	return command;
 }
 
-int get_number()
-// Library facilities used: iostream
+/// <summary>
+/// 
+/// </summary>
+/// <returns></returns>
+int GetNumber()
 {
 	int result;
 

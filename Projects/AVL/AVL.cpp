@@ -16,7 +16,6 @@
 #include "AVL.h"
 #include <iostream>
 #include <iomanip>
-#include <string>
 
 using namespace std;
 
@@ -34,25 +33,25 @@ AVL::AVL()
 /// </summary>
 AVL::~AVL()
 {
-	Delete(root);
+	Destroy(root);
 }
 
 /// <summary>
-/// Removes a node from the tree
-/// and that nodes children.
+/// Removes a node and all of it's children.
 /// </summary>
 /// <param name="node">Node to be removed</param>
-void AVL::Delete(Node*& node)
+void AVL::Destroy(Node*& node)
 {
 	// if the node is null, we can return
-	if (node == nullptr) {
+	if (node == nullptr) 
+	{
 		return;
 	}
 
 	// We need to remove the nodes children before
 	// we can remove the node itself
-	Delete(node->left);
-	Delete(node->right);
+	Destroy(node->left);
+	Destroy(node->right);
 
 	// delete the node
 	delete node;
@@ -60,20 +59,55 @@ void AVL::Delete(Node*& node)
 	node = nullptr;
 }
 
-// Probably need to find a better home for these
+/// <summary>
+/// 
+/// </summary>
+/// <returns></returns>
+int AVL::Size()
+{
+	return treeSize;
+}
+
+// TODO: Should IsLeaf be a function of Node?
+/// <summary>
+/// Checks if a given node is a leaf:
+/// this means that the node has no
+/// children.
+/// </summary>
+/// <param name="n"></param>
+/// <returns></returns>
+bool AVL::IsLeaf(Node* n)
+{
+	// we could check the nodes,
+	// or we could just realize a height of 1
+	// is a leaf
+	if (n->height == 1)
+	{
+		return true;
+	}
+
+	return false;
+}
 
 /// <summary>
-/// Prints the AVL tree.
+/// Prints a text-based graphical
+/// representation of the AVL Tree.
 /// </summary>
-/// <param name="size"></param>
 void AVL::Print()
 {
 	Print(root, treeSize);
 }
 
+// TODO: We're probably going to want move the 'cout' out of the function
+/// <summary>
+/// Prints a text-based graphical
+/// representation of the AVL Tree.
+/// </summary>
+/// <param name="n"></param>
+/// <param name="size"></param>
 void AVL::Print(Node* n, int size)
 {
-	cout << setw(4 * size) << "";
+	cout << setw(static_cast<int64_t>(4) * size) << "";
 
 	if (n == nullptr)
 		cout << "[Empty]" << endl;
@@ -85,11 +119,6 @@ void AVL::Print(Node* n, int size)
 		Print(n->left, size + 1);
 		Print(n->right, size + 1);
 	}
-}
-
-int AVL::Size()
-{
-	return treeSize;
 }
 
 #pragma region AVL Tree Functions
@@ -149,53 +178,122 @@ Node* AVL::Insert(int v, Node*& node)
 	return node;
 }
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="v"></param>
+void AVL::Delete(int v)
+{
+	root = Delete(v, root);
+}
 
-/*
+/// <summary>
+/// 
+/// </summary>
+/// <param name="v"></param>
+/// <param name="node"></param>
+/// <returns></returns>
+Node* AVL::Delete(int v, Node*& node)
+{
+	if (v < node->val)
+	{
+		node->left = Delete(v, node->left);
+
+		UpdateHeight(node);
+		return Rebalance(node, v);
+	}
+	else if (v > node->val)
+	{
+		node->right = Delete(v, node->right);
+
+		UpdateHeight(node);
+		return Rebalance(node, v);
+	}
+	else if (v == node->val)
+	{
+		// some delete needs to happen here
+
+		// we're going to have to check if there are children
+		if (node->right != nullptr && node->left != nullptr)
+		{
+			Node* successor = // min from right child?
+			node = successor;
+		}
+		else if (node->left == nullptr)
+		{
+			node = node->right;
+			treeSize--;
+		}
+		else if (node->right == nullptr)
+		{
+			node = node->left;
+			treeSize--;
+		}
+		else {
+			// no children in node being removed
+		}
+	}
+	else {
+		// value doesn't exist in tree
+		cout << "Value not found in tree" << endl;
+	}
+}
+
 /// <remarks>
 /// Average O(log n)
 /// Worst case O(log n)
 /// </remarks>
-void AVL::Erase(int v, Node *& n)
+void AVL::Erase(int v, Node *& node)
 {
-
-	if (n == nullptr)
+	if (node == nullptr)
+	{
 		return;
-	if (v < n->val)
-		Erase(v, n->left);
-	else if (v > n->val)
-		Erase(v, n->right);
-	else EraseNode(n);
+	}
+	if (v < node->val)
+	{
+		Erase(v, node->left);
+	}
+	else if (v > node->val)
+	{
+		Erase(v, node->right);
+	}
+	else
+	{
+		Erase(node);
+	}
 }
 
-void AVL::EraseNode(Node *& n)
+void AVL::Erase(Node *& node)
 {
 	Node *temp;
 
-	temp = n;
+	temp = node;
 
-	if (n->left == nullptr)
+	if (node->left == nullptr)
 	{
-		n = n->right;
+		node = node->right;
 		delete temp;
 		treeSize--;
 	}
 
-	else if (n->right == nullptr)
+	else if (node->right == nullptr)
 	{
-		n = n->left;
+		node = node->left;
 		delete temp;
 		treeSize--;
 	}
 
 	else
 	{
-		temp = n->left;
+		temp = node->left;
 		while (temp->right != nullptr)
+		{
 			temp = temp->right;
-		n->val = temp->val;
-		Erase(n->val, n->left);
+		}
+		node->val = temp->val;
+		Erase(node->val, node->left);
 	}
-}*/
+}
 
 /// <summary>
 /// Searches the tree for a value.
@@ -246,45 +344,7 @@ Node* AVL::Search(int v, Node*& node)
 }
 #pragma endregion
 
-#pragma region Helper Functions
-/// <summary>
-/// Returns the high difference of a 
-/// nodes children
-/// </summary>
-/// <param name="node"></param>
-/// <returns></returns>
-int AVL::GetBalance(Node*& node)
-{
-	// if node is null, well... 
-	if (node == nullptr)
-	{
-		return 0;
-	}
-
-	// get the difference between the heights
-	return GetHeight(node->right) - GetHeight(node->left);
-}
-
-/// <summary>
-/// Checks if a given node is a leaf:
-/// this means that the node has no
-/// children.
-/// </summary>
-/// <param name="n"></param>
-/// <returns></returns>
-bool AVL::IsLeaf(Node* n)
-{
-	// we could check the nodes,
-	// or we could just realize a height of 1
-	// is a leaf
-	if (n->height == 1)
-	{
-		return true;
-	}
-
-	return false;
-}
-
+#pragma region Print Functions
 /// <summary>
 /// Prints the tree InOrder
 /// Left, Root, Right
@@ -363,7 +423,7 @@ string AVL::PreOrder(Node* n)
 		preOrder += " " + left;
 	}
 
-	if (!right.empty()) 
+	if (!right.empty())
 	{
 		preOrder += " " + right;
 	}
@@ -412,6 +472,26 @@ string AVL::PostOrder(Node* n)
 	postOrder += std::to_string(n->val);
 
 	return postOrder;
+}
+#pragma endregion
+
+#pragma region Balance Functions
+/// <summary>
+/// Returns the high difference of a 
+/// nodes children
+/// </summary>
+/// <param name="node"></param>
+/// <returns></returns>
+int AVL::GetBalance(Node*& node)
+{
+	// if node is null, well... 
+	if (node == nullptr)
+	{
+		return 0;
+	}
+
+	// get the difference between the heights
+	return GetHeight(node->right) - GetHeight(node->left);
 }
 
 /// <summary>

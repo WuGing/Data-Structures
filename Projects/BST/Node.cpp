@@ -1,17 +1,19 @@
 /*
-* I Joshua Sutherland, Section 001, have not used any code other than my
-* own (or that in the textbook) for this project.I also have not used any
-* function or data-structure from the Standard - Template Library. I
-* understand that any violation of this disclaimer will result in a 0 for
-* the project.
+* Node class that represents a node in a BST.
+* This node type supports 32-bit integers.
 */
 
 #include "Node.h"
 
 using namespace std;
 
+/// <summary>
+/// Node constructor
+/// </summary>
+/// <param name="v">Value to be stored in the node</param>
 Node::Node(int v)
 {
-	val = v;
-	left = right = nullptr;
+	val = v;					// value of the node
+	left = right = nullptr;		// new nodes have no children
+	height = 1;					// nodes are always added as a leaf
 };

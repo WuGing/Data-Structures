@@ -12,11 +12,9 @@ public:
 	Node(int v);
 	~Node() {};
 	
-	// properties
+	// Properties
 	int val;
 	int height;
-
-	// children
 	Node* left;
 	Node* right;
 };

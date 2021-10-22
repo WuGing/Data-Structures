@@ -27,4 +27,4 @@ const int FRONT = 1;
 	char GetUserCommand();
 	int GetItem();
 	void AllocateArray(int*& intArray, int size);
-	void PrintMenu();
+	void DisplayMenu();

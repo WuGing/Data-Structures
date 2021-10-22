@@ -1,9 +1,16 @@
 /*
-* I Joshua Sutherland, Section 001, have not used any code other than my
-* own (or that in the textbook) for this project.I also have not used any
-* function or data-structure from the Standard - Template Library. I
-* understand that any violation of this disclaimer will result in a 0 for
-* the project.
+* Binary Search Tree
+* 
+* This is an ordered, or sorted, binary tree. 
+* The tree is rooted, with values greater than
+* the root being in the right subtree, and values
+* lesser than the root being in the left subtree.
+* 
+* Space, Search, Insert, and Delete all have a
+* worst case Time Complexity of O(n). 
+* Search, Insert, and Delete have an average
+* time complexity of O(log n), while Space
+* maintains an average of O(n).
 */
 
 #include "BST.h"
@@ -12,28 +19,119 @@
 
 using namespace std;
 
+/// <summary>
+/// Constructor
+/// </summary>
 BST::BST()
 {
 	root = nullptr;
 	treeSize = 0;
-};
+}
 
+/// <summary>
+/// Destructor
+/// </summary>
 BST::~BST()
 {
-	destroy(root);
-};
+	Destroy(root);
+}
 
-void BST::destroy(Node *& node)
+/// <summary>
+/// Removes a node and all of it's children.
+/// </summary>
+/// <param name="node">Node to be removed</param>
+void BST::Destroy(Node *& node)
 {
+	// if the node is null, we can return
 	if (node == nullptr)
+	{
 		return;
-	destroy(node->left);
-	destroy(node->right);
+	}
+
+	// We need to remove the nodes children before
+	// we can remove the node itself
+	Destroy(node->left);
+	Destroy(node->right);
+	
+	// delete the node
 	delete node;
+	// set the pointer to null
 	node = nullptr;
 }
 
-void BST::insert(int v, Node *& node)
+/// <summary>
+/// Prints a text-based graphical 
+/// representation of the Binary
+/// Search Tree.
+/// </summary>
+void BST::Print()
+{
+	Print(root, treeSize);
+}
+
+// TODO: We're going to want to move the 'cout' out of the function
+/// <summary>
+/// Prints a text-based graphical 
+/// representation of the Binary
+/// Search Tree.
+/// </summary>
+/// <param name="n"></param>
+/// <param name="size"></param>
+void BST::Print(Node* n, int size)
+{
+	cout << setw(static_cast<int64_t>(4) * size) << "";
+	if (n == nullptr)
+	{
+		cout << "[Empty]" << endl;
+	}
+	else if (IsLeaf(n))
+	{
+		cout << n->val << " [leaf]" << endl;
+	}
+	else
+	{
+		cout << n->val << endl;
+		Print(n->left, size + 1);
+		Print(n->right, size + 1);
+	}
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <returns></returns>
+int BST::Size()
+{
+	return treeSize;
+}
+
+// TODO: Should IsLeaf be a function of Node?
+/// <summary>
+/// Checks if a given node is a leaf:
+/// this means that the node has no
+/// children.
+/// </summary>
+/// <param name="n"></param>
+/// <returns></returns>
+bool BST::IsLeaf(Node* n)
+{
+	if (n->left == nullptr && n->right == nullptr)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+#pragma region BST Functions
+void BST::Insert(int v)
+{
+	Insert(v, root);
+}
+
+void BST::Insert(int v, Node *& node)
 {
 	if (node == nullptr)
 	{
@@ -41,106 +139,216 @@ void BST::insert(int v, Node *& node)
 		treeSize++;
 	}
 	else if (v < node->val)
-		insert(v, node->left);
+	{
+		Insert(v, node->left);
+	}
 	else if (v > node->val)
-		insert(v, node->right);
+	{
+		Insert(v, node->right);
+	}
 	else if (v == node->val)
+	{
 		cout << "Cannot have duplicate values in this tree" << endl;
-};
+	}
+}
 
-void BST::print(Node* n, int size)
+/// <summary>
+/// 
+/// </summary>
+/// <param name="v"></param>
+void BST::Delete(int v)
 {
-	cout << setw(4 * size) << "";
-	if (n == nullptr)
-		cout << "[Empty]" << endl;
-	else if (is_leaf(n))
-		cout << n->val << " [leaf]" << endl;
+	Delete(v, root);
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <param name="v"></param>
+/// <param name="node"></param>
+void BST::Delete(int v, Node *& node)
+{
+	// if the node is null, the value doesn't exist
+	if (node == nullptr)
+	{
+		cout << "Value doesn't exist in tree" << endl;
+		return;
+	}
+	if (v < node->val)
+	{
+		Delete(v, node->left);
+	}
+	else if (v > node->val)
+	{
+		Delete(v, node->right);
+	}
 	else
 	{
-		cout << n->val << endl;
-		print(n->left, size+1);
-		print(n->right, size+1);
+		Delete(node);
 	}
-};
+}
 
-void BST::erase(int v, Node *& n)
-{
-
-	if (n == nullptr)
-		return;
-	if (v < n->val)
-		erase(v, n->left);
-	else if (v > n->val)
-		erase(v, n->right);
-	else eraseNode(n);
-};
-
-void BST::eraseNode(Node *& n)
+/// <summary>
+/// 
+/// </summary>
+/// <param name="node"></param>
+void BST::Delete(Node *& node)
 {
 	Node *temp;
 
-	temp = n;
+	temp = node;
 
-	if (n->left == nullptr)
+	if (node->left == nullptr)
 	{
-		n = n->right;
+		node = node->right;
 		delete temp;
 		treeSize--;
 	}
-
-	else if (n->right == nullptr)
+	else if (node->right == nullptr)
 	{
-		n = n->left;
+		node = node->left;
 		delete temp;
 		treeSize--;
 	}
-
 	else
 	{
-		temp = n->left;
+		temp = node->left;
 		while (temp->right != nullptr)
+		{
 			temp = temp->right;
-		n->val = temp->val;
-		erase(n->val, n->left);
+		}
+		node->val = temp->val;
+		Delete(node->val, node->left);
 	}
 }
 
-void BST::inorder(Node *n)
+#pragma region Print Functions
+/// <summary>
+/// Prints the tree InOrder
+/// Left, Root, Right
+/// </summary>
+/// <returns></returns>
+string BST::InOrder()
 {
-	if (n == nullptr)
-		return;
-	inorder(n->left);
-	cout << n->val << ' ';
-	inorder(n->right);
-};
-
-void BST::preorder(Node *n)
-{
-	if (n == nullptr)
-		return;
-	cout << n->val << ' ';
-	preorder(n->left);
-	preorder(n->right);
-};
-
-void BST::postorder(Node *n)
-{
-	if (n == nullptr)
-		return;
-	postorder(n->left);
-	postorder(n->right);
-	cout << n->val << ' ';
-};
-
-bool BST::is_leaf(Node *n)
-{
-	if (n->left == nullptr && n->right == nullptr)
-		return true;
-	else 
-		return false;
+	return InOrder(root);
 }
 
-int BST::size()
+/// <summary>
+/// Prints a subtree InOrder
+/// Left, Root, Right
+/// </summary>
+/// <param name="n"></param>
+/// <returns></returns>
+string BST::InOrder(Node *n)
 {
-	return treeSize;
-};
+	if (n == nullptr)
+	{
+		return "";
+	}
+
+	string inOrder;
+
+	string left = InOrder(n->left);
+	string right = InOrder(n->right);
+
+	if (!left.empty())
+	{
+		inOrder += left + " ";
+	}
+
+	inOrder += std::to_string(n->val);
+
+	if (!right.empty())
+	{
+		inOrder += " " + right;
+	}
+
+	return inOrder;
+}
+
+/// <summary>
+/// Prints the tree in PreOrder
+/// Root, Left, Right
+/// </summary>
+/// <returns></returns>
+string BST::PreOrder()
+{
+	return PreOrder(root);
+}
+
+/// <summary>
+/// Prints a subtree in PreOrder
+/// Root, Left, Right
+/// </summary>
+/// <param name="n"></param>
+/// <returns></returns>
+string BST::PreOrder(Node *n)
+{
+	if (n == nullptr)
+	{
+		return "";
+	}
+
+	string preOrder;
+
+	preOrder += std::to_string(n->val);
+
+	string left = PreOrder(n->left);
+	string right = PreOrder(n->right);
+
+	if (!left.empty())
+	{
+		preOrder += " " + left;
+	}
+
+	if (!right.empty())
+	{
+		preOrder += " " + right;
+	}
+
+	return preOrder;
+}
+
+/// <summary>
+/// Prints the tree in PostOrder
+/// Left, Right, Root
+/// </summary>
+/// <returns></returns>
+string BST::PostOrder()
+{
+	return PostOrder(root);
+}
+
+/// <summary>
+/// Prints a subtree tree in PostOrder
+/// Left, Right, Root
+/// </summary>
+/// <param name="n"></param>
+/// <returns></returns>
+string BST::PostOrder(Node *n)
+{
+	if (n == nullptr)
+	{
+		return "";
+	}
+
+	string postOrder;
+
+	string left = PostOrder(n->left);
+	string right = PostOrder(n->right);
+
+	if (!left.empty())
+	{
+		postOrder += left + " ";
+	}
+
+	if (!right.empty())
+	{
+		postOrder += right + " ";
+	}
+
+	postOrder += std::to_string(n->val);
+
+	return postOrder;
+}
+#pragma endregion

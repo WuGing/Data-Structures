@@ -14,9 +14,8 @@ int main()
 
 	do
 	{
-		print_menu();
-
-		choice = toupper(get_user_command());
+		DisplayMenu();
+		choice = toupper(GetUserCommand());
 
 		switch (choice)
 		{
@@ -25,7 +24,7 @@ int main()
 			break;
 
 		case INSERT:
-			tree.Insert(get_number());
+			tree.Insert(GetNumber());
 			break;
 
 		case PRINT:
@@ -47,7 +46,7 @@ int main()
 /// <summary>
 /// Prints the menu for our application
 /// </summary>
-void print_menu()
+void DisplayMenu()
 {
 	cout << endl; // Print blank line before the menu
 	cout << "The following choices are available: " << endl;
@@ -57,8 +56,11 @@ void print_menu()
 	cout << " Q   Quit this test program" << endl;
 }
 
-
-char get_user_command()
+/// <summary>
+/// 
+/// </summary>
+/// <returns></returns>
+char GetUserCommand()
 {
 	char command;
 
@@ -69,7 +71,11 @@ char get_user_command()
 	return command;
 }
 
-int get_number()
+/// <summary>
+/// 
+/// </summary>
+/// <returns></returns>
+int GetNumber()
 {
 	int result;
 
