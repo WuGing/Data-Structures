@@ -17,4 +17,5 @@ public:
 	int height;
 	Node* left;
 	Node* right;
+	Node* parent;
 };

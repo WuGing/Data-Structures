@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Source.h"
-#include "Node.h"
 #include "AVL.h"
 
 using namespace std;
@@ -24,11 +23,11 @@ int main()
 			break;
 
 		case INSERT:
-			tree.Insert(GetNumber());
+			tree.BST::Insert(GetNumber());
 			break;
 
 		case PRINT:
-			tree.Print();
+			tree.BST::Print();
 			break;
 
 		case QUIT:

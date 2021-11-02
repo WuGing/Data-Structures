@@ -36,6 +36,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BST Tests", "Tests\BST Tests\BST Tests.vcxproj", "{83653043-AB73-4DAB-9C75-46E95A72180E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -118,6 +120,14 @@ Global
 		{29A2A99A-A6A2-4711-85E1-F1F1400373E8}.Release|x64.ActiveCfg = Release|Win32
 		{29A2A99A-A6A2-4711-85E1-F1F1400373E8}.Release|x86.ActiveCfg = Release|Win32
 		{29A2A99A-A6A2-4711-85E1-F1F1400373E8}.Release|x86.Build.0 = Release|Win32
+		{83653043-AB73-4DAB-9C75-46E95A72180E}.Debug|x64.ActiveCfg = Debug|x64
+		{83653043-AB73-4DAB-9C75-46E95A72180E}.Debug|x64.Build.0 = Debug|x64
+		{83653043-AB73-4DAB-9C75-46E95A72180E}.Debug|x86.ActiveCfg = Debug|Win32
+		{83653043-AB73-4DAB-9C75-46E95A72180E}.Debug|x86.Build.0 = Debug|Win32
+		{83653043-AB73-4DAB-9C75-46E95A72180E}.Release|x64.ActiveCfg = Release|x64
+		{83653043-AB73-4DAB-9C75-46E95A72180E}.Release|x64.Build.0 = Release|x64
+		{83653043-AB73-4DAB-9C75-46E95A72180E}.Release|x86.ActiveCfg = Release|Win32
+		{83653043-AB73-4DAB-9C75-46E95A72180E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -135,6 +145,7 @@ Global
 		{589F8BDC-C3F7-4121-ABB6-C3CF1209A532} = {7413E554-EB7D-43DB-860E-8A2F5265A9AA}
 		{18352847-0F4B-4271-8EB8-DA93AD5122E7} = {7413E554-EB7D-43DB-860E-8A2F5265A9AA}
 		{29A2A99A-A6A2-4711-85E1-F1F1400373E8} = {7413E554-EB7D-43DB-860E-8A2F5265A9AA}
+		{83653043-AB73-4DAB-9C75-46E95A72180E} = {788F7C1B-F37E-4028-9BE2-46A2F9949B09}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4ED0B860-6418-44A3-B776-D16E254D1C3A}

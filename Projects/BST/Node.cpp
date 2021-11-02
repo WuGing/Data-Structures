@@ -13,7 +13,7 @@ using namespace std;
 /// <param name="v">Value to be stored in the node</param>
 Node::Node(int v)
 {
-	val = v;					// value of the node
-	left = right = nullptr;		// new nodes have no children
-	height = 1;					// nodes are always added as a leaf
+	val = v;							// value of the node
+	left = right = parent = nullptr;	// new nodes have no children
+	height = 1;							// nodes are always added as a leaf
 };
